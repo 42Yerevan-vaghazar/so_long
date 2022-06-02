@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:45:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/05/31 21:20:31 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/02 19:28:30 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,29 +86,41 @@ int ft_swap_components(t_mlx *mlx, char *current_place, char *place_to_go)
 	return (1);
 }
 
+int	static check_key(int key, size_t *count_step)
+{
+	if (key == KEY_W || key == KEY_ARROW_UP || key == KEY_S
+		|| key == KEY_ARROW_DOWN || key == KEY_A || key == KEY_ARROW_LEFT
+		|| key == KEY_D || key == KEY_ARROW_RIGHT)
+		{
+			*count_step += 1;
+			ft_printf("%d\n", *count_step);
+			return (1);
+		}
+	return (0);
+}
+
 int ft_press(int key, t_mlx *mlx)
 {
-	if (key == KEY_ESC)
+	if (!check_key(key, &mlx->player.step))
+		return(0);
+	if (key == KEY_ESC || key == KEY_Q)
 		exit(1);
-	if (key == KEY_W || key == KEY_ARROW_UP)
+	if (key == KEY_W|| key == KEY_ARROW_UP)
 		ft_swap_components(mlx, &mlx->map[mlx->player.y][mlx->player.x],
 		 &mlx->map[mlx->player.y - 1][mlx->player.x]);
 	if (key == KEY_S || key == KEY_ARROW_DOWN)
 		ft_swap_components(mlx, &mlx->map[mlx->player.y][mlx->player.x],
 		 &mlx->map[mlx->player.y + 1][mlx->player.x]);
 	if (key == KEY_A || key == KEY_ARROW_LEFT)
-		ft_swap_components(mlx, &mlx->map[mlx->player.y][mlx->player.x], 
+		ft_swap_components(mlx, &mlx->map[mlx->player.y][mlx->player.x],
 		&mlx->map[mlx->player.y][mlx->player.x - 1]);
 	if (key == KEY_D || key == KEY_ARROW_RIGHT)
-		ft_swap_components(mlx, &mlx->map[mlx->player.y][mlx->player.x], 
+		ft_swap_components(mlx, &mlx->map[mlx->player.y][mlx->player.x],
 		&mlx->map[mlx->player.y][mlx->player.x + 1]);
-	mlx->player.step += 1;
-	printf("%zu\n", mlx->player.step);
 	fill_window(mlx, &mlx->imgs);
 	if ((mlx->map[mlx->player.y][mlx->player.x] == '2'
 		&& mlx->coin_num == 0) || mlx->map[mlx->player.y][mlx->player.x] == 'e')
 		exit(1);
-	mlx_hook(mlx->mlx_win, 3, 1L << 1, ft_press, mlx);
 	return (1);
 }
 

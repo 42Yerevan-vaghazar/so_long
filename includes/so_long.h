@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:32:35 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/05/31 20:25:22 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/02 19:29:58 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <mlx.h>
 # include "libft.h"
 # include "keys.h"
+# include "ft_printf.h"
+
 
 # define COIN_IMG "./src_img/coin.xpm"
 # define OBSTACLE_IMG "./src_img/obstacle.xpm"
