@@ -6,12 +6,12 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:32:35 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/06/02 19:29:58 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/05 12:44:02 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef SO_LONG_H
-#  define SO_LONG_H
+#ifndef SO_LONG_H
+# define SO_LONG_H
 
 # include <stdio.h>
 # include <fcntl.h>
@@ -19,7 +19,6 @@
 # include "libft.h"
 # include "keys.h"
 # include "ft_printf.h"
-
 
 # define COIN_IMG "./src_img/coin.xpm"
 # define OBSTACLE_IMG "./src_img/obstacle.xpm"
@@ -47,26 +46,30 @@ typedef struct s_img
 }				t_img;
 typedef struct s_data
 {
-    void	*mlx;
-	void	*mlx_win;
-	void	*img;
-	int		img_width;
-	int		img_height;
-	char	**map;
-	int		coin_num;
-    int     x;
-    int     y;
-	t_player player;
-	t_img	imgs;
-}               t_mlx;
+	void		*mlx;
+	void		*mlx_win;
+	void		*img;
+	int			img_width;
+	int			img_height;
+	char		**map;
+	int			coin_num;
+	int			x;
+	int			y;
+	t_player	player;
+	t_img		imgs;
+}				t_mlx;
 
-
-
-char    **get_map(char *av);
+char	**get_map(char *av);
 int		allocate_obstacles(char **map, t_mlx *mlx);
 int		allocate_zero(char **map, t_mlx *mlx);
-// int		allocate_component(char **map, t_mlx *mlx, char component, char upper);
-// int		fill_window(t_mlx *mlx, char **map, t_imp imgs);
+int		allocate_component(void *img, t_img *imgs, t_mlx *mlx, char component);
+int		fill_window(t_mlx *mlx, t_img *imgs);
 t_img	*get_imgs(t_mlx *mlx, t_img *imgs);
-
+int		ft_printf(const char *from, ...);
+int		free_arr(char *str);
+int		ft_close(t_mlx *mlx);
+int		ft_press(int key, t_mlx *mlx);
+int		ft_swap_components(t_mlx *mlx, char *current_place, char *place_to_go);
+void	count_coins(t_mlx *mlx);
+void	initilizer_zero(int *a, int *b, int *c, int *d);
 #endif

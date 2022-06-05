@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:41:51 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/05/31 11:23:19 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/05 11:44:02 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	read_line(char **tmp_line, int fd)
 	}
 	return (1);
 }
-#include <stdio.h>
 
 char	*get_next_line(int fd)
 {
