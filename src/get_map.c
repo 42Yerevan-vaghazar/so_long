@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 19:05:37 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/06/05 13:14:01 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/05 13:21:44 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	valid_map(char **map)
 	int	j;
 	int	sline;
 
-	initilizer_zero(&i, &j, NULL, NULL);
+	initilizer_zero(&i, &j, &i, &j);
 	sline = ft_strlen(map[0]);
 	while (map[i][j])
 		if ((map[i][j++] != '1' || ft_strlen(map[i]) != sline)
