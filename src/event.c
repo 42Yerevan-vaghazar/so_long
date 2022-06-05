@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 10:48:46 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/06/05 12:42:50 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/05 19:39:59 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	static	check_key(int key, size_t *count_step)
 
 int	ft_press(int key, t_mlx *mlx)
 {
-	if (!check_key(key, &mlx->player.step))
+	if (!check_key(key, &mlx->player.step) || mlx->win || mlx->lose)
 		return (0);
 	if (key == KEY_ESC || key == KEY_Q)
 		exit(1);
@@ -40,10 +40,10 @@ int	ft_press(int key, t_mlx *mlx)
 	if (key == KEY_D || key == KEY_ARROW_RIGHT)
 		ft_swap_components(mlx, &mlx->map[mlx->player.y][mlx->player.x],
 			&mlx->map[mlx->player.y][mlx->player.x + 1]);
-	fill_window(mlx, &mlx->imgs);
+	fill_window(mlx);
 	if ((mlx->map[mlx->player.y][mlx->player.x] == '2'
-		&& mlx->coin_num == 0) || mlx->map[mlx->player.y][mlx->player.x] == 'e')
-		exit(1);
+		&& mlx->coin_num == 0) && ++mlx->win)
+		paint_result(mlx);
 	return (1);
 }
 

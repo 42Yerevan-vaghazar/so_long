@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:32:35 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/06/05 12:44:02 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/05 18:56:55 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define ZERO_IMG "./src_img/zero.xpm"
 # define EXIT_IMG "./src_img/exit.xpm"
 # define ENEMY "./src_img/enemy.xpm"
-# define COMPONENTS "CP01Ee"
+# define COMPONENTS "CP01E"
 
 typedef struct s_player
 {
@@ -38,11 +38,23 @@ typedef struct s_player
 typedef struct s_img
 {
 	void	*zero;
+	int		width_zero;
+	int		height_zero;
 	void	*coin;
+	int		width_coin;
+	int		height_coin;
 	void	*player;
+	int		width_player;
+	int		height_player;
 	void	*exit;
+	int		width_exit;
+	int		height_exit;
 	void	*enemy;
+	int		width_enemy;
+	int		height_enemy;
 	void	*obstacle;
+	int		width_obstacle;
+	int		height_obstacle;
 }				t_img;
 typedef struct s_data
 {
@@ -57,13 +69,17 @@ typedef struct s_data
 	int			y;
 	t_player	player;
 	t_img		imgs;
+	int			win_width;
+	int			win_height;
+	int			win;
+	int			lose;
 }				t_mlx;
 
 char	**get_map(char *av);
 int		allocate_obstacles(char **map, t_mlx *mlx);
 int		allocate_zero(char **map, t_mlx *mlx);
-int		allocate_component(void *img, t_img *imgs, t_mlx *mlx, char component);
-int		fill_window(t_mlx *mlx, t_img *imgs);
+int		allocate_component(void *img, int a, t_mlx *mlx, char component);
+int		fill_window(t_mlx *mlx);
 t_img	*get_imgs(t_mlx *mlx, t_img *imgs);
 int		ft_printf(const char *from, ...);
 int		free_arr(char *str);
@@ -72,4 +88,5 @@ int		ft_press(int key, t_mlx *mlx);
 int		ft_swap_components(t_mlx *mlx, char *current_place, char *place_to_go);
 void	count_coins(t_mlx *mlx);
 void	initilizer_zero(int *a, int *b, int *c, int *d);
+int		paint_result(t_mlx *mlx);
 #endif

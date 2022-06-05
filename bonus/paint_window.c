@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:45:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/06/05 12:55:15 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/05 16:05:34 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,14 @@ int	allocate_component(void *img, t_img *imgs, t_mlx *mlx, char component)
 int	fill_window(t_mlx *mlx, t_img *imgs)
 {
 	int		a;
-	size_t	win_width;
-	size_t	win_height;
 
-	win_height = 0;
-	win_width = ft_strlen(*(mlx)->map);
-	while (mlx->map[win_height] && mlx->map[win_height][0])
-		win_height++;
+	mlx->win_height = 0;
+	mlx->win_width = ft_strlen(*(mlx)->map);
+	while (mlx->map[mlx->win_height] && mlx->map[mlx->win_height][0])
+		mlx->win_height++;
 	if (!mlx->mlx_win)
-		mlx->mlx_win = mlx_new_window(mlx->mlx, win_width * mlx->img_width,
-				win_height * mlx->img_height, "so_long");
+		mlx->mlx_win = mlx_new_window(mlx->mlx, mlx->win_width * mlx->img_width,
+				mlx->win_height * mlx->img_height, "so_long");
 	allocate_component(imgs->zero, imgs, mlx, '0');
 	allocate_component(imgs->obstacle, imgs, mlx, '1');
 	allocate_component(imgs->player, imgs, mlx, 'P');
@@ -88,7 +86,7 @@ int	ft_swap_components(t_mlx *mlx, char *current_place, char *place_to_go)
 		*place_to_go = 'P';
 	}
 	if (*place_to_go == 'E' && ++mlx->player.step
-		&& ft_printf("%d\n", mlx->player.step))
+		&& mlx_string_put(mlx->mlx, mlx->mlx_win, 30, mlx->win_height, 800000, "barev"))
 	{	
 		*place_to_go = '2';
 		*current_place = '0';

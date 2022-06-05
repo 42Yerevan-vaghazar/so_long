@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 10:46:52 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/06/05 12:57:44 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/05 19:17:47 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,10 @@ void	initilizer_zero(int *a, int *b, int *c, int *d)
 	*b = 0;
 	*c = 0;
 	*d = 0;
+}
+
+int	paint_result(t_mlx *mlx)
+{
+	allocate_component(mlx->imgs.zero, 0, mlx, '0');
+	return (1);
 }
