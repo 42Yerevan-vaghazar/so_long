@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:32:35 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/06/05 18:56:55 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/12 17:14:30 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,29 @@ typedef struct s_img
 	void	*zero;
 	int		width_zero;
 	int		height_zero;
+	int		centre_zero;
 	void	*coin;
 	int		width_coin;
 	int		height_coin;
+	int		centre_coin;
 	void	*player;
 	int		width_player;
 	int		height_player;
+	int		centre_player;
 	void	*exit;
 	int		width_exit;
 	int		height_exit;
+	int		centre_exit;
 	void	*enemy;
 	int		width_enemy;
 	int		height_enemy;
+	int		centre_enemy;
 	void	*obstacle;
 	int		width_obstacle;
 	int		height_obstacle;
+	int		centre_obstacle;
 }				t_img;
+
 typedef struct s_data
 {
 	void		*mlx;
@@ -73,6 +80,8 @@ typedef struct s_data
 	int			win_height;
 	int			win;
 	int			lose;
+	int			p_x;
+	int			p_y;
 }				t_mlx;
 
 char	**get_map(char *av);
@@ -80,13 +89,16 @@ int		allocate_obstacles(char **map, t_mlx *mlx);
 int		allocate_zero(char **map, t_mlx *mlx);
 int		allocate_component(void *img, int a, t_mlx *mlx, char component);
 int		fill_window(t_mlx *mlx);
-t_img	*get_imgs(t_mlx *mlx, t_img *imgs);
+t_img	*get_imgs(t_mlx *mlx);
 int		ft_printf(const char *from, ...);
 int		free_arr(char *str);
 int		ft_close(t_mlx *mlx);
 int		ft_press(int key, t_mlx *mlx);
-int		ft_swap_components(t_mlx *mlx, char *current_place, char *place_to_go);
+void	ft_swap_components(t_mlx *mlx, char *current_place, char *place_to_go);
 void	count_coins(t_mlx *mlx);
 void	initilizer_zero(int *a, int *b, int *c, int *d);
 int		paint_result(t_mlx *mlx);
+int		ft_paint_swaps(t_mlx *mlx, int x, int y);
+int		ft_paint_steps(t_mlx *mlx);
+
 #endif

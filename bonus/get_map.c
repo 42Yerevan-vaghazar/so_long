@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 19:05:37 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/06/05 15:55:24 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/12 15:49:29 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ static int	check_components(char **map)
 
 int	valid_map(char **map)
 {
-	int	i;
-	int	j;
-	int	sline;
+	int		i;
+	int		j;
+	size_t	sline;
 
 	initilizer_zero(&i, &j, &i, &j);
 	sline = ft_strlen(map[0]);
 	while (map[i][j])
-		if ((map[i][j++] != '1' || ft_strlen(map[i]) != sline)
+		if ((map[i][j++] != '1' || ((ft_strlen(map[i]) != sline)))
 			&& ft_printf("Error: wrong wall\n"))
 			return (0);
 	j = -1;
@@ -72,9 +72,9 @@ int	valid_map(char **map)
 	{
 		while (map[i][++j])
 			if (((map[i][ft_strlen(map[i]) - 1] != '1' || map[i][0] != '1')
-			&& ft_printf("Error: wrong wall")) || ((ft_strlen(map[i]) != sline
+			&& ft_printf("Error: wrong wall")) || (((ft_strlen(map[i]) != sline
 			|| !ft_strchr("CP01Ee", map[i][j]))
-			&& ft_printf("Error: wrong component\n")))
+			&& ft_printf("Error: wrong component\n"))))
 				return (0);
 		j = -1;
 	}

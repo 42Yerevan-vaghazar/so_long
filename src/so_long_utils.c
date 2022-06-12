@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 10:46:52 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/06/05 19:17:47 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/12 17:52:59 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,13 @@ void	initilizer_zero(int *a, int *b, int *c, int *d)
 int	paint_result(t_mlx *mlx)
 {
 	allocate_component(mlx->imgs.zero, 0, mlx, '0');
+	if (mlx->win)
+		mlx_string_put(mlx->mlx, mlx->mlx_win,
+			(mlx->win_width * mlx->img_width) / 2 - (mlx->imgs.width_zero / 2),
+			(mlx->win_height * mlx->img_height) / 2, 0x0000FF00, "You won!");
+	else
+		mlx_string_put(mlx->mlx, mlx->mlx_win,
+			(mlx->win_width * mlx->img_width) / 2 - (mlx->imgs.width_zero / 2),
+			(mlx->win_height * mlx->img_height) / 2, 0x00FF0000, "You lost!");
 	return (1);
 }

@@ -6,13 +6,13 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 10:48:46 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/06/05 19:39:59 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/12 15:13:19 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int	static	check_key(int key, size_t *count_step)
+int	static	check_key(int key)
 {
 	if (key == KEY_W || key == KEY_ARROW_UP || key == KEY_S \
 		|| key == KEY_ARROW_DOWN || key == KEY_A || key == KEY_ARROW_LEFT \
@@ -24,23 +24,26 @@ int	static	check_key(int key, size_t *count_step)
 
 int	ft_press(int key, t_mlx *mlx)
 {
-	if (!check_key(key, &mlx->player.step) || mlx->win || mlx->lose)
+	char	*c_place;
+
+	c_place = &mlx->map[mlx->player.y][mlx->player.x];
+	mlx->p_x = mlx->player.x;
+	mlx->p_y = mlx->player.y;
+	if (!check_key(key) || mlx->win || mlx->lose)
 		return (0);
 	if (key == KEY_ESC || key == KEY_Q)
 		exit(1);
 	if (key == KEY_W || key == KEY_ARROW_UP)
-		ft_swap_components(mlx, &mlx->map[mlx->player.y][mlx->player.x],
-			&mlx->map[mlx->player.y - 1][mlx->player.x]);
+		mlx->player.y = mlx->player.y - 1;
 	if (key == KEY_S || key == KEY_ARROW_DOWN)
-		ft_swap_components(mlx, &mlx->map[mlx->player.y][mlx->player.x],
-			&mlx->map[mlx->player.y + 1][mlx->player.x]);
+		mlx->player.y = mlx->player.y + 1;
 	if (key == KEY_A || key == KEY_ARROW_LEFT)
-		ft_swap_components(mlx, &mlx->map[mlx->player.y][mlx->player.x],
-			&mlx->map[mlx->player.y][mlx->player.x - 1]);
+		mlx->player.x = mlx->player.x - 1;
 	if (key == KEY_D || key == KEY_ARROW_RIGHT)
-		ft_swap_components(mlx, &mlx->map[mlx->player.y][mlx->player.x],
-			&mlx->map[mlx->player.y][mlx->player.x + 1]);
-	fill_window(mlx);
+		mlx->player.x = mlx->player.x + 1;
+	ft_swap_components(mlx, c_place, &mlx->map[mlx->player.y][mlx->player.x]);
+	ft_paint_swaps(mlx, mlx->p_x, mlx->p_y);
+	ft_paint_swaps(mlx, mlx->player.x, mlx->player.y);
 	if ((mlx->map[mlx->player.y][mlx->player.x] == '2'
 		&& mlx->coin_num == 0) && ++mlx->win)
 		paint_result(mlx);

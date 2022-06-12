@@ -6,26 +6,28 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:45:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/06/05 16:05:34 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/12 17:41:24 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void static	helper_allocate_component(t_mlx *mlx, t_img *imgs)
+void static	helper_allocate_component(t_mlx *mlx, int x, int y)
 {
-	if (mlx->map[mlx->y][mlx->x] == '2')
-	{	
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, imgs->zero,
-			mlx->x * mlx->img_width, mlx->y * mlx->img_height);
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, imgs->exit,
-			mlx->x * mlx->img_width, mlx->y * mlx->img_height);
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, imgs->player,
-			mlx->x * mlx->img_width, mlx->y * mlx->img_height);
+	if (mlx->map[y][x] == '2' && !mlx->win && !mlx->lose)
+	{
+		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->imgs.zero,
+			x * mlx->img_width, y * mlx->img_height);
+		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->imgs.exit,
+			x * mlx->img_width + mlx->imgs.centre_exit,
+			y * mlx->img_height + mlx->imgs.centre_exit);
+		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->imgs.player,
+			x * mlx->img_width + mlx->imgs.centre_player,
+			y * mlx->img_height + mlx->imgs.centre_player);
 	}
 }
 
-int	allocate_component(void *img, t_img *imgs, t_mlx *mlx, char component)
+int	allocate_component(void *img, int a, t_mlx *mlx, char component)
 {
 	mlx->x = -1;
 	mlx->y = -1;
@@ -41,18 +43,33 @@ int	allocate_component(void *img, t_img *imgs, t_mlx *mlx, char component)
 			}
 			if (mlx->map[mlx->y][mlx->x] == component || component == '0')
 				mlx_put_image_to_window(mlx->mlx, mlx->mlx_win,
-					img, mlx->x * mlx->img_width, mlx->y * mlx->img_height);
-			helper_allocate_component(mlx, imgs);
+					img, mlx->x * mlx->img_width + a,
+					mlx->y * mlx->img_height + a);
+			helper_allocate_component(mlx, mlx->x, mlx->y);
 		}
 		mlx->x = -1;
 	}
 	return (0);
 }
 
-int	fill_window(t_mlx *mlx, t_img *imgs)
+static void	helper_fill_window(t_mlx *mlx)
 {
-	int		a;
+	allocate_component(mlx->imgs.zero,
+		(mlx->img_width - mlx->imgs.width_zero) / 2, mlx, '0');
+	allocate_component(mlx->imgs.obstacle,
+		mlx->imgs.centre_obstacle, mlx, '1');
+	allocate_component(mlx->imgs.player,
+		mlx->imgs.centre_player, mlx, 'P');
+	allocate_component(mlx->imgs.coin,
+		mlx->imgs.centre_coin, mlx, 'C');
+	allocate_component(mlx->imgs.exit,
+		mlx->imgs.centre_exit, mlx, 'E');
+	allocate_component(mlx->imgs.enemy,
+		mlx->imgs.centre_enemy, mlx, 'e');
+}
 
+int	fill_window(t_mlx *mlx)
+{
 	mlx->win_height = 0;
 	mlx->win_width = ft_strlen(*(mlx)->map);
 	while (mlx->map[mlx->win_height] && mlx->map[mlx->win_height][0])
@@ -60,36 +77,31 @@ int	fill_window(t_mlx *mlx, t_img *imgs)
 	if (!mlx->mlx_win)
 		mlx->mlx_win = mlx_new_window(mlx->mlx, mlx->win_width * mlx->img_width,
 				mlx->win_height * mlx->img_height, "so_long");
-	allocate_component(imgs->zero, imgs, mlx, '0');
-	allocate_component(imgs->obstacle, imgs, mlx, '1');
-	allocate_component(imgs->player, imgs, mlx, 'P');
-	allocate_component(imgs->coin, imgs, mlx, 'C');
-	allocate_component(imgs->exit, imgs, mlx, 'E');
-	allocate_component(imgs->enemy, imgs, mlx, 'e');
+	helper_fill_window(mlx);
+	if (!mlx->win && !mlx->lose)
+		ft_paint_steps(mlx);
 	return (1);
 }
 
-int	ft_swap_components(t_mlx *mlx, char *current_place, char *place_to_go)
+int	ft_paint_swaps(t_mlx *mlx, int x, int y)
 {
-	if (*place_to_go == 'C')
-		mlx->coin_num -= 1;
-	if (*place_to_go == 'e')
-		exit(1);
-	if ((*place_to_go == '0'
-			|| *place_to_go == 'C') && ++mlx->player.step
-		&& ft_printf("%d\n", mlx->player.step))
+	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win,
+		mlx->imgs.zero, x * mlx->img_width,
+		y * mlx->img_height);
+	if (mlx->map[y][x] == 'P' && !mlx->lose)
 	{
-		if (*current_place == '2')
-			*current_place = 'E';
-		else
-			*current_place = '0';
-		*place_to_go = 'P';
+		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win,
+			mlx->imgs.player, (x * mlx->imgs.width_zero)
+			+ mlx->imgs.centre_player,
+			(y * mlx->imgs.height_zero) + mlx->imgs.centre_player);
 	}
-	if (*place_to_go == 'E' && ++mlx->player.step
-		&& mlx_string_put(mlx->mlx, mlx->mlx_win, 30, mlx->win_height, 800000, "barev"))
-	{	
-		*place_to_go = '2';
-		*current_place = '0';
-	}
-	return (1);
+	else if (mlx->map[y][x] == 'E')
+		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win,
+			mlx->imgs.exit, (x * mlx->imgs.width_zero)
+			+ mlx->imgs.centre_player,
+			(y * mlx->imgs.height_zero) + mlx->imgs.centre_player);
+	helper_allocate_component(mlx, x, y);
+	if (!mlx->lose && !mlx->win)
+		ft_paint_steps(mlx);
+	return (0);
 }
