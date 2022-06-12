@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:41:37 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/06/12 17:42:14 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:03:24 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ int	ft_paint_steps(t_mlx *mlx)
 		35, 0x00FF0000, "steps  ");
 	mlx_string_put(mlx->mlx, mlx->mlx_win, 120,
 		35, 0x00FF0000, steps);
+	free(steps);
 	return (0);
 }

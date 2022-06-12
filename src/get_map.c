@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 19:05:37 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/06/12 12:18:13 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:01:12 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	valid_map(char **map)
 	{
 		while (map[i][++j])
 			if (((map[i][ft_strlen(map[i]) - 1] != '1' || map[i][0] != '1')
-			&& ft_printf("Error: wrong wall")) || (((ft_strlen(map[i]) != sline
+			&& ft_printf("Error: wrong wall\n")) || (((ft_strlen(map[i]) != sline
 			|| !ft_strchr(COMPONENTS, map[i][j]))
 			&& ft_printf("Error: wrong component\n"))))
 				return (0);
