@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 10:48:46 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/06/12 15:13:19 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/19 09:44:06 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int	ft_press(int key, t_mlx *mlx)
 	c_place = &mlx->map[mlx->player.y][mlx->player.x];
 	mlx->p_x = mlx->player.x;
 	mlx->p_y = mlx->player.y;
-	if (!check_key(key) || mlx->win || mlx->lose)
-		return (0);
 	if (key == KEY_ESC || key == KEY_Q)
 		exit(1);
+	if (!check_key(key) || mlx->win || mlx->lose)
+		return (0);
 	if (key == KEY_W || key == KEY_ARROW_UP)
 		mlx->player.y = mlx->player.y - 1;
 	if (key == KEY_S || key == KEY_ARROW_DOWN)
