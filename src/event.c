@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 10:48:46 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/06/19 09:44:06 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/06/26 09:29:42 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@ int	ft_press(int key, t_mlx *mlx)
 	mlx->p_y = mlx->player.y;
 	if (key == KEY_ESC || key == KEY_Q)
 		exit(1);
-	if (!check_key(key) || mlx->win || mlx->lose)
+	else if (!check_key(key) || mlx->win || mlx->lose)
 		return (0);
-	if (key == KEY_W || key == KEY_ARROW_UP)
+	else if (key == KEY_W || key == KEY_ARROW_UP)
 		mlx->player.y = mlx->player.y - 1;
-	if (key == KEY_S || key == KEY_ARROW_DOWN)
+	else if (key == KEY_S || key == KEY_ARROW_DOWN)
 		mlx->player.y = mlx->player.y + 1;
-	if (key == KEY_A || key == KEY_ARROW_LEFT)
+	else if (key == KEY_A || key == KEY_ARROW_LEFT)
 		mlx->player.x = mlx->player.x - 1;
-	if (key == KEY_D || key == KEY_ARROW_RIGHT)
+	else if (key == KEY_D || key == KEY_ARROW_RIGHT)
 		mlx->player.x = mlx->player.x + 1;
 	ft_swap_components(mlx, c_place, &mlx->map[mlx->player.y][mlx->player.x]);
 	ft_paint_swaps(mlx, mlx->p_x, mlx->p_y);
